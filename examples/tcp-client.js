@@ -8,7 +8,13 @@ client.connect(PORT, HOST, function() {
 
 	console.log('CONNECTED TO: ' + HOST + ':' + PORT);
 	// Write a message to the socket as soon as the client is connected, the server will receive it as message from the client 
-	client.write('');
+	var str = JSON.stringify({msg: 'hello'});
+	var len = Buffer.byteLength(str);
+	var buf = new Buffer(len + 2);
+	buf.writeUInt16BE(len, 0);
+	buf.write(str, 2);
+	client.write(buf);
+	// client.write('');
 
 });
 
